@@ -4,7 +4,7 @@
 declare namespace API {
   type CurrentUser = {
     name?: string;
-    avatar?: string;
+    avatarUrl?: string;
     userid?: string;
     email?: string;
     signature?: string;
@@ -62,12 +62,16 @@ declare namespace API {
   };
 
   type LoginParams = {
-    username?: string;
-    password?: string;
+    userAccount?: string;
+    userPassword?: string;
     autoLogin?: boolean;
     type?: string;
   };
-
+  type RegisterParams = {
+    userAccount?: string;
+    userPassword?: string;
+    checkPassword?: string;
+  };
   type ErrorResponse = {
     /** 业务约定的错误码 */
     errorCode: string;
@@ -97,5 +101,8 @@ declare namespace API {
     datetime?: string;
     description?: string;
     type?: NoticeIconItemType;
+  };
+  type RegisterResult = {
+    id: number;
   };
 }

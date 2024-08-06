@@ -41,4 +41,11 @@ export default {
       pathRewrite: { '^': '' },
     },
   },
+  dev:{
+    "/api":{
+      target:"http://localhost:8080",
+      changeOrigin:true,
+      pathRewrite:{'^/api':'/api'}
+    }
+  }
 };
