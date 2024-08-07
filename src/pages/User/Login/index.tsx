@@ -5,7 +5,7 @@ import {
   UserOutlined,
 
 } from '@ant-design/icons';
-import {LoginForm, ProFormCheckbox, ProFormText,} from '@ant-design/pro-components';
+import {LoginForm, ProFormText,} from '@ant-design/pro-components';
 // @ts-ignore
 import {Helmet, history, useModel} from '@umijs/max';
 import {Alert, message, Tabs} from 'antd';
@@ -14,7 +14,7 @@ import React, {useState} from 'react';
 import {flushSync} from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
 
-const useStyles = createStyles(({ token }) => {
+const useStyles = createStyles(({token}) => {
   return {
     action: {
       marginLeft: '8px',
@@ -51,7 +51,7 @@ const useStyles = createStyles(({ token }) => {
 });
 const LoginMessage: React.FC<{
   content: string;
-}> = ({ content }) => {
+}> = ({content}) => {
   return (
     <Alert
       style={{
@@ -66,8 +66,8 @@ const LoginMessage: React.FC<{
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
-  const { initialState, setInitialState } = useModel('@@initialState');
-  const { styles } = useStyles();
+  const {initialState, setInitialState} = useModel('@@initialState');
+  const {styles} = useStyles();
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
     if (userInfo) {
@@ -103,29 +103,29 @@ const Login: React.FC = () => {
     //   message.error(defaultLoginFailureMessage);
     // }
     try {
-        //登录
-        const msg = await login({
-          ...values,
-          type,
-        });
-        if (msg !== null) {
-          const defaultLoginSuccessMessage = '登录成功！';
-          message.success(defaultLoginSuccessMessage);
-          await fetchUserInfo();
-          const urlParams = new URL(window.location.href).searchParams;
-          history.push(urlParams.get('redirect') || '/');
-          return;
-        }
-        console.log(msg);
-        // 如果失败去设置用户错误信息
-        setUserLoginState(msg);
-    }catch (error){
+      //登录
+      const msg = await login({
+        ...values,
+        type,
+      });
+      if (msg !== null) {
+        const defaultLoginSuccessMessage = '登录成功！';
+        message.success(defaultLoginSuccessMessage);
+        await fetchUserInfo();
+        const urlParams = new URL(window.location.href).searchParams;
+        history.push(urlParams.get('redirect') || '/');
+        return;
+      }
+      console.log(msg);
+      // 如果失败去设置用户错误信息
+      setUserLoginState(msg);
+    } catch (error) {
       const defaultLoginFailureMessage = '登录失败，请重试！';
       console.error(error);
       message.error(defaultLoginFailureMessage);
     }
   };
-  const { status, type: loginType } = userLoginState;
+  const {status, type: loginType} = userLoginState;
   return (
     <div className={styles.container}>
       <Helmet>
@@ -144,7 +144,7 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src="/logo.svg" />}
+          logo={<img alt="logo" src="/logo.svg"/>}
           title="用户中心"
           subTitle={'最好用的用户管理平台'}
           initialValues={{
@@ -167,7 +167,7 @@ const Login: React.FC = () => {
           />
 
           {status === 'error' && loginType === 'account' && (
-            <LoginMessage content={'错误的账户名和密码(admin/ant.design)'} />
+            <LoginMessage content={'错误的账户名和密码(admin/ant.design)'}/>
           )}
           {type === 'account' && (
             <>
@@ -175,7 +175,7 @@ const Login: React.FC = () => {
                 name="userAccount"
                 fieldProps={{
                   size: 'large',
-                  prefix: <UserOutlined />,
+                  prefix: <UserOutlined/>,
                 }}
                 placeholder={"请输入用户账户"}
                 rules={[
@@ -189,7 +189,7 @@ const Login: React.FC = () => {
                 name="userPassword"
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined />,
+                  prefix: <LockOutlined/>,
                 }}
                 placeholder={'请输入密码'}
                 rules={[
@@ -202,26 +202,31 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
+          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误"/>}
           <div
             style={{
               marginBottom: 24,
             }}
           >
-            <ProFormCheckbox noStyle name="autoLogin">
-              自动登录
-            </ProFormCheckbox>
+            <a
+              style={{
+                float: 'left',
+              }}
+            >
+              忘记密码
+            </a>
             <a
               style={{
                 float: 'right',
               }}
+              onClick={() => history.push('/user/register')}
             >
-              忘记密码请联系管理员！
+              没有账号？去注册
             </a>
           </div>
         </LoginForm>
       </div>
-      <Footer />
+      <Footer/>
     </div>
   );
 };

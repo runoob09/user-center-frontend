@@ -1,7 +1,7 @@
 import {Footer} from '@/components';
 import {login, register} from '@/services/ant-design-pro/api';
 import {LockOutlined, UserOutlined,} from '@ant-design/icons';
-import {LoginForm, ProFormText,} from '@ant-design/pro-components';
+import {LoginForm, ProFormCheckbox, ProFormText,} from '@ant-design/pro-components';
 import type {ProFormInstance} from '@ant-design/pro-components';
 // @ts-ignore
 import {Helmet, history} from '@umijs/max';
@@ -92,6 +92,11 @@ const Register: React.FC = () => {
                      onFinish={async (values) => {
                        await handleSubmit(values as API.LoginParams);
                      }}
+                     submitter={{
+                       searchConfig:{
+                         submitText: '注册'
+                       },
+                     }}
           >
             <Tabs
               activeKey={"register"}
@@ -162,6 +167,20 @@ const Register: React.FC = () => {
                 }
               ]}
             />
+            <div
+              style={{
+                marginBottom: 24,
+              }}
+            >
+              <a
+                style={{
+                  float: 'right',
+                }}
+                onClick={() => history.push('/user/login')}
+              >
+                已有账号？去登录
+              </a>
+            </div>
           </LoginForm>
         </div>
         <Footer/>
