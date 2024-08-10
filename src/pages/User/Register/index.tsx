@@ -55,8 +55,6 @@ const Register: React.FC = () => {
           ...values,
         });
         if (msg !== null) {
-          const defaultLoginSuccessMessage = '注册成功！';
-          message.success(defaultLoginSuccessMessage);
           // 回到登录页
           history.push("/user/login")
         }
