@@ -8,7 +8,7 @@ import {
 import {LoginForm, ProFormText,} from '@ant-design/pro-components';
 // @ts-ignore
 import {Helmet, history, useModel} from '@umijs/max';
-import {Alert, message, Tabs} from 'antd';
+import {message, Tabs} from 'antd';
 import {createStyles} from 'antd-style';
 import React, {useState} from 'react';
 import {flushSync} from 'react-dom';
@@ -49,22 +49,7 @@ const useStyles = createStyles(({token}) => {
     },
   };
 });
-const LoginMessage: React.FC<{
-  content: string;
-}> = ({content}) => {
-  return (
-    <Alert
-      style={{
-        marginBottom: 24,
-      }}
-      message={content}
-      type="error"
-      showIcon
-    />
-  );
-};
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const {initialState, setInitialState} = useModel('@@initialState');
   const {styles} = useStyles();
@@ -117,15 +102,12 @@ const Login: React.FC = () => {
         return;
       }
       console.log(msg);
-      // 如果失败去设置用户错误信息
-      setUserLoginState(msg);
     } catch (error) {
       const defaultLoginFailureMessage = '登录失败，请重试！';
       console.error(error);
       message.error(defaultLoginFailureMessage);
     }
   };
-  const {status, type: loginType} = userLoginState;
   return (
     <div className={styles.container}>
       <Helmet>
@@ -165,10 +147,6 @@ const Login: React.FC = () => {
               }
             ]}
           />
-
-          {status === 'error' && loginType === 'account' && (
-            <LoginMessage content={'错误的账户名和密码(admin/ant.design)'}/>
-          )}
           {type === 'account' && (
             <>
               <ProFormText
@@ -201,8 +179,6 @@ const Login: React.FC = () => {
               />
             </>
           )}
-
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误"/>}
           <div
             style={{
               marginBottom: 24,

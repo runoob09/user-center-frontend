@@ -3,24 +3,19 @@
 
 declare namespace API {
   type CurrentUser = {
-    userAccount?: string,
+    id?: number;
     username?: string;
+    userAccount?: string;
     avatarUrl?: string;
-    userid?: string;
+    gender?: number;
+    userPassword?: string;
+    phoneNumber?: string;
     email?: string;
-    title?: string;
-    group?: string;
-    tags?: { key?: string; label?: string }[];
-    notifyCount?: number;
-    unreadCount?: number;
-    country?: string;
-    access?: string;
-    geographic?: {
-      province?: { label?: string; key?: string };
-      city?: { label?: string; key?: string };
-    };
-    address?: string;
-    phone?: string;
+    userStatus?: number;
+    isDelete?: number;
+    userRole?: number;
+    createTime?: Date;
+    updateTime?: Date;
   };
 
   type LoginResult = {
